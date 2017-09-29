@@ -1,5 +1,5 @@
-import { combineReducers, createStore, StoreEnhancer } from 'redux';
-declare var __REDUX_DEVTOOLS_EXTENSION__: () => StoreEnhancer<any>
+import { combineReducers, createStore } from 'redux';
+
 import {
   reducer as auth,
   defaultState as defaultAuthState,
@@ -35,7 +35,6 @@ const state = createStore<State>(
     data,
   }),
   defaultState,
-  __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
 );
 
 export default state;
