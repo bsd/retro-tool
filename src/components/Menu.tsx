@@ -16,7 +16,7 @@ type Menu = {
     selectRoom: (roomId: string) => void;
     createRoom: (user: User) => void;
     updateVisitInput: (visitInput: string) => void;
-    selectVisitRoom: (roomId: string) => void;
+    selectVisitRoom: (roomId: string, user: User) => void;
   }): JSX.Element;
 }
 
@@ -72,7 +72,7 @@ const Menu: Menu = ({ user, rooms, visitInput, visitingRooms, visible, editAccou
     />
     <Button
       label="Join Room"
-      onClick={() => selectVisitRoom(visitInput)}
+      onClick={() => user && selectVisitRoom(visitInput, user)}
     />
   </menu>
 );
