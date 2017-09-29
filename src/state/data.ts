@@ -660,6 +660,21 @@ export const deleteCard =
         })
     );
 
+export const selectVisitRoom =
+  (dispatch: Dispatch) =>
+    (roomId: string, user: User) => (
+      dispatch(dataRequest),
+      fetchData<Room>(`rooms/${roomId}`)
+        .then((room: Room) => setData<string>(`users/${user.uid}/visitingRooms/${room.id}`, room.name))
+        .then(() => fetchCompleteRoom(dispatch)(roomId))
+        .then(() => fetchAccountData(dispatch)(user))
+        .catch(error => {
+          console.error(error);
+          dispatch(updateRoomError(error));
+          return {};
+        })
+    );
+
 export const defaultState =
   (): Data => ({
     rooms: {},

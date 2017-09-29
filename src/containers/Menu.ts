@@ -11,6 +11,7 @@ import { User, $user } from '../state/auth';
 import {
   createRoom,
   fetchCompleteRoom,
+  selectVisitRoom,
 } from '../state/data';
 
 
@@ -33,7 +34,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       .then(() => selectRoom(dispatch)(roomId)),
   createRoom: (user: User) =>
     createRoom(dispatch)(user, { name: 'New Room' })
-      .then((key: string) => selectRoom(dispatch)(key))
+      .then((key: string) => selectRoom(dispatch)(key)),
+  selectVisitRoom: (roomId: string) =>
+    selectVisitRoom(dispatch)(roomId)
 });
 
 export default connect(

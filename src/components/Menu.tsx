@@ -16,10 +16,11 @@ type Menu = {
     selectRoom: (roomId: string) => void;
     createRoom: (user: User) => void;
     updateVisitInput: (visitInput: string) => void;
+    selectVisitRoom: (roomId: string) => void;
   }): JSX.Element;
 }
 
-const Menu: Menu = ({ user, rooms, visitInput, visitingRooms, visible, editAccount, selectRoom, createRoom, updateVisitInput }) => (
+const Menu: Menu = ({ user, rooms, visitInput, visitingRooms, visible, editAccount, selectRoom, selectVisitRoom, createRoom, updateVisitInput }) => (
   <menu className={`Menu ${visible ? '--visible' : '--hidden'}`}>
     {user && (
       <div className="Menu-User">
@@ -71,6 +72,7 @@ const Menu: Menu = ({ user, rooms, visitInput, visitingRooms, visible, editAccou
     />
     <Button
       label="Join Room"
+      onClick={() => selectVisitRoom(visitInput)}
     />
   </menu>
 );
