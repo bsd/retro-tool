@@ -65,7 +65,7 @@ const Menu: Menu = ({ user, rooms, visitInput, visitingRooms, visible, editAccou
       )}
     </ul>}
     <TextInput
-      label="Room Id"
+      label="room"
       className="Menu-VisitInput"
       value={visitInput}
       onChange={value => updateVisitInput(value)}

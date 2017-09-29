@@ -2,7 +2,7 @@
 
 .Board {
   width: 240px;
-  height: 400px;
+  min-height: 400px;
   margin: 0 12px;
 
   border: 1px solid $blue;
