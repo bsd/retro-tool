@@ -28,7 +28,7 @@ type RoomElement = {
 
 const Room: RoomElement =
   ({ room, editRoom, canEdit, boards, user, canAddBoard, createBoard, updateRoom, deleteRoom, updateEditRoom }) => (
-    <div className="Room">
+    <div className={`Room ${editRoom && editRoom.id === room.id ? '--is-being-edited' : '' }`}>
       <header>
         <h2>{room.name}</h2>
         {(canEdit && (!editRoom || editRoom.id !== room.id)) && <Button

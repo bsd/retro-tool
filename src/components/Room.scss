@@ -2,6 +2,9 @@
 
 .Room {
   width: 100%;
+  &.--is-being-edited {
+    width: auto;
+  }
   header {
     position: absolute;
     z-index: 500;
