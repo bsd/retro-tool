@@ -1,9 +1,9 @@
 var __wpo = {
   "assets": {
     "main": [
-      "./index.3a666f129abe6c9f0c0f.js",
-      "./vendor.3a666f129abe6c9f0c0f.js",
-      "./styles.3a666f129abe6c9f0c0f.css",
+      "./index.435901cf13837258b71a.js",
+      "./vendor.435901cf13837258b71a.js",
+      "./styles.435901cf13837258b71a.css",
       "./"
     ],
     "additional": [],
@@ -11,14 +11,14 @@ var __wpo = {
   },
   "externals": [],
   "hashesMap": {
-    "706dd7df71ec7294908280fbd34c9e06770d3ac4": "./index.3a666f129abe6c9f0c0f.js",
-    "7761f06b11da0e16b658846977b8a6faaec34ab0": "./vendor.3a666f129abe6c9f0c0f.js",
-    "e75408b48be8df593c653909a07a55737f35e881": "./styles.3a666f129abe6c9f0c0f.css",
-    "4b9b1c87d525ebd0f603297b8a1d3e9852d79e19": "./"
+    "7ecf58b11a86a48e5cdf31f6e37deff3240c68d1": "./index.435901cf13837258b71a.js",
+    "dbff21d9a6ca637574e67d799e8d433ca3518466": "./vendor.435901cf13837258b71a.js",
+    "e75408b48be8df593c653909a07a55737f35e881": "./styles.435901cf13837258b71a.css",
+    "647998571bd9910eb3d1adfc9225a58896eefdd2": "./"
   },
   "strategy": "changed",
   "responseStrategy": "cache-first",
-  "version": "2017-9-29 13:09:53",
+  "version": "2017-9-29 13:19:54",
   "name": "webpack-offline",
   "pluginVersion": "4.8.4",
   "relativePaths": true
