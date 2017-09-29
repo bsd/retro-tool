@@ -30,7 +30,20 @@
 
 
 .Room-Editor {
-  //
+  h3 {
+    margin: 12px auto 0;
+  }
+  i {
+    font-size: 12px;
+
+    display: block;
+    span {
+      cursor: text;
+      user-select: auto;
+
+      color: $green;
+    }
+  }
   &>button, &>.fieldset, &>select {
     width: 100%;
     margin: 6px 0;

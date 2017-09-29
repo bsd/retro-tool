@@ -55,6 +55,8 @@ const Room: RoomElement =
               ))
             }
           />
+          <i>Room Id: <span>{room.id}</span></i>
+          <i>Use this to share you room</i>
           <h3>Favorites</h3>
           <CheckBox
             label="Enabled"
