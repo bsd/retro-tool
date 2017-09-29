@@ -483,7 +483,7 @@ var Room = function Room(_ref) {
         updateRoom = _ref.updateRoom,
         deleteRoom = _ref.deleteRoom,
         updateEditRoom = _ref.updateEditRoom;
-    return React.createElement("div", { className: "Room" }, React.createElement("header", null, React.createElement("h2", null, room.name), canEdit && (!editRoom || editRoom.id !== room.id) && React.createElement(Input_1.Button, { label: "Edit Room", onClick: function onClick() {
+    return React.createElement("div", { className: "Room " + (editRoom && editRoom.id === room.id ? '--is-being-edited' : '') }, React.createElement("header", null, React.createElement("h2", null, room.name), canEdit && (!editRoom || editRoom.id !== room.id) && React.createElement(Input_1.Button, { label: "Edit Room", onClick: function onClick() {
             return updateEditRoom(Object.assign({}, room));
         } })), !editRoom || editRoom.id !== room.id ? React.createElement("div", { className: "Room-Boards" }, array_1.map(boards, function (board) {
         return React.createElement(Board_1.default, { key: board.id, board: board, room: room });

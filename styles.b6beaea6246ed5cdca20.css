@@ -618,6 +618,10 @@ button:disabled {
   width: 100%;
 }
 
+.Room.\--is-being-edited {
+  width: auto;
+}
+
 .Room header {
   position: absolute;
   z-index: 500;
