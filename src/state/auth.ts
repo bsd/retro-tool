@@ -140,6 +140,7 @@ const deleteAccountError: ActionCreator<DeleteAccountError> =
 
 const updateAccountDataSuccess: ActionCreator<UpdateAccountDataSuccess> =
   ({ rooms }) => ({
+  ({ rooms, visitingRooms }) => ({
     type: Type.UPDATE_ACCOUNT_DATA_SUCCESS,
     rooms,
   });
@@ -162,9 +163,15 @@ export const logIn: SingleRequest<{ email: string, password: string }> =
           .then(user =>
             fetchData(`users/${user.uid}`)
               .then(userData => dispatch(logInSuccess({ user: Object.assign(user, userData || { rooms: [] }) })))
-              .catch(error => dispatch(logInError(error)))
+              .catch(error => {
+                console.error(error);
+                dispatch(logInError(error))
+              })
           )
-          .catch(error => dispatch(logInError(error)))
+          .catch(error => {
+            console.error(error);
+            dispatch(logInError(error))
+          })
       );
 
 export const logOut: SingleRequest<{}> =
@@ -175,7 +182,10 @@ export const logOut: SingleRequest<{}> =
         firebase.auth()
           .signOut()
           .then(() => dispatch(logOutSuccess({ user: null })))
-          .catch(error => dispatch(logOutError(error)))
+          .catch(error => {
+            console.error(error);
+            dispatch(logOutError(error))
+          })
       );
 
 export const createAccount: SingleRequest<{ email: string, password: string }> =
@@ -189,7 +199,10 @@ export const createAccount: SingleRequest<{ email: string, password: string }> =
             fetchData(`users/${user.uid}`)
               .then(userData => dispatch(createAccountSuccess({ user: Object.assign(user, userData || { rooms: [] }) })))
           )
-          .catch(error => dispatch(createAccountError(error)))
+          .catch(error => {
+            console.error(error);
+            dispatch(createAccountError(error))
+          })
       );
 
 export const updateAccount: SingleRequest<{
@@ -213,7 +226,10 @@ export const updateAccount: SingleRequest<{
           .then(() => dispatch(updateAccountSuccess({
             user: firebase.auth().currentUser as any, // this is hack because of null vs undefined
           })))
-          .catch(error => dispatch(updateAccountError(error)));
+          .catch(error => {
+            console.error(error);
+            dispatch(updateAccountError(error))
+          })
       } else {
         dispatch(updateAccountError({ message: 'Not Logged In' }));
         return Promise.resolve(undefined);
@@ -229,7 +245,10 @@ export const deleteAccount: SingleRequest<{}> =
         return user
           .delete()
           .then(() => dispatch(deleteAccountSuccess({ user: null })))
-          .catch(error => dispatch(deleteAccountError(error)));
+          .catch(error => {
+            console.error(error);
+            dispatch(deleteAccountError(error))
+          })
       } else {
         return Promise.resolve(
           dispatch(logOutError({ message: 'Must be logged in to delete an Account' }))
@@ -244,7 +263,10 @@ export const fetchAccountData: SingleRequest<{ uid: User["uid"] }> =
         dispatch(authRequest),
         fetchData<UserData>(`users/${uid}`)
           .then(userData => dispatch(updateAccountDataSuccess(userData)))
-          .catch(error => dispatch(updateAccountDataError(error)))
+          .catch(error => {
+            console.error(error);
+            dispatch(updateAccountDataError(error))
+          })
       );
 
 
