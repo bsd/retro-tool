@@ -1,6 +1,7 @@
 @import './_config';
 
 .Room {
+  width: 100%;
   header {
     position: absolute;
     z-index: 500;
@@ -51,10 +52,13 @@
 }
 
 .Room-Boards {
+  position: relative;
+  left: 180px;
+
   display: flex;
   overflow-x: auto;
 
-  min-width: 100%;
+  width: calc(100% - 180px);
   height: 100%;
   padding: 60px 0 48px;
 
