@@ -37,6 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       .then((key: string) => selectRoom(dispatch)(key)),
   selectVisitRoom: (roomId: string, user: User) =>
     selectVisitRoom(dispatch)(roomId, user)
+      .then(() => selectRoom(dispatch)(roomId)),
 });
 
 export default connect(
