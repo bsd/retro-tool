@@ -30,10 +30,10 @@ const Room: RoomElement =
     <div className="Room">
       <header>
         <h2>{room.name}</h2>
-        <Button
+        {(!editRoom || editRoom.id !== room.id) && <Button
           label="Edit Room"
           onClick={() => updateEditRoom(Object.assign({}, room))}
-        />
+        />}
       </header>
       {!editRoom || editRoom.id !== room.id
         ? <div className="Room-Boards">
