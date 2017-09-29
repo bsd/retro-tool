@@ -450,7 +450,7 @@ var Menu = function Menu(_ref) {
                 editAccount(false);
                 selectRoom(id);
             } }, visitingRooms[id]);
-    })), React.createElement(Input_1.TextInput, { label: "Room Id", className: "Menu-VisitInput", value: visitInput, onChange: function onChange(value) {
+    })), React.createElement(Input_1.TextInput, { label: "room", className: "Menu-VisitInput", value: visitInput, onChange: function onChange(value) {
             return updateVisitInput(value);
         } }), React.createElement(Input_1.Button, { label: "Join Room", onClick: function onClick() {
             return user && selectVisitRoom(visitInput, user);

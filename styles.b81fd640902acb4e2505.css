@@ -357,6 +357,7 @@ button:disabled {
 
 .Menu {
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 240px;
@@ -568,7 +569,7 @@ button:disabled {
 
 .Board {
   width: 240px;
-  height: 400px;
+  min-height: 400px;
   margin: 0 12px;
   border: 1px solid #212945;
 }
@@ -613,13 +614,17 @@ button:disabled {
 
 /* Sizes */
 
+.Room {
+  width: 100%;
+}
+
 .Room header {
   position: absolute;
+  z-index: 500;
   top: 0;
   left: 0;
   width: 100%;
   text-align: center;
-  border: 1px solid white;
   background-color: #212945;
 }
 
@@ -659,10 +664,14 @@ button:disabled {
 }
 
 .Room-Boards {
+  position: relative;
+  left: 180px;
   display: flex;
   overflow-x: auto;
+  width: calc(100% - 180px);
   height: 100%;
-  align-items: center;
+  padding: 60px 0 48px;
+  align-items: left;
   flex-wrap: nowrap;
   justify-content: center;
   -webkit-overflow-scrolling: touch;
