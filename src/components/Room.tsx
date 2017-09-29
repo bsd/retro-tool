@@ -20,7 +20,7 @@ type RoomElement = {
     canAddBoard: boolean;
     createBoard: (user: User, room: Room, settings: { name: string; } & Partial<Board>) => void;
     updateRoom: (room: Room, user: User) => void;
-    deleteRoom: (room: Room) => void;
+    deleteRoom: (room: Room, user: User) => void;
     updateEditRoom: (room: Room) => void;
   }): JSX.Element;
 }
@@ -145,7 +145,7 @@ const Room: RoomElement =
           />
           <Button
             label="Delete Room"
-            onClick={() => deleteRoom(editRoom)}
+            onClick={() => user && deleteRoom(editRoom, user)}
           />
         </div>}
     </div>

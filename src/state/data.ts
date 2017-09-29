@@ -619,9 +619,10 @@ export const updateCard =
 
 export const deleteRoom =
   (dispatch: Dispatch) =>
-    (room: Room) => (
+    (room: Room, user: User) => (
       dispatch(dataRequest),
       removeData(`rooms/${room.id}`)
+        .then(() => removeData(`users/${user.uid}/rooms/${room.id}`))
         .then(() => dispatch(deleteRoomSuccess({ id: room.id })))
         .catch(error => {
           console.error(error);
