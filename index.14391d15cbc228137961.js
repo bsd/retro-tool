@@ -428,10 +428,14 @@ __webpack_require__(130);
 var Menu = function Menu(_ref) {
     var user = _ref.user,
         rooms = _ref.rooms,
+        visitInput = _ref.visitInput,
+        visitingRooms = _ref.visitingRooms,
         visible = _ref.visible,
         editAccount = _ref.editAccount,
         selectRoom = _ref.selectRoom,
-        createRoom = _ref.createRoom;
+        selectVisitRoom = _ref.selectVisitRoom,
+        createRoom = _ref.createRoom,
+        updateVisitInput = _ref.updateVisitInput;
     return React.createElement("menu", { className: "Menu " + (visible ? '--visible' : '--hidden') }, user && React.createElement("div", { className: "Menu-User" }, React.createElement("div", { className: "Menu-User-pic" }, React.createElement("img", { src: user.photoURL || undefined })), React.createElement("h1", null, user.displayName || ''), React.createElement(Input_1.Button, { label: "Edit Account", onClick: function onClick() {
             return editAccount(true);
         } })), user && React.createElement("ul", { className: "Menu-RoomList" }, React.createElement("h3", null, "Room List"), array_1.map(Object.keys(rooms), function (id) {
@@ -441,7 +445,16 @@ var Menu = function Menu(_ref) {
             } }, rooms[id]);
     }), React.createElement(Input_1.Button, { label: "Create Room", onClick: function onClick() {
             return createRoom(user);
-        } })));
+        } })), user && Object.keys(visitingRooms).length && React.createElement("ul", { className: "Menu-RoomList" }, React.createElement("h3", null, "Visting rooms"), array_1.map(Object.keys(visitingRooms), function (id) {
+        return React.createElement("li", { key: id, onClick: function onClick() {
+                editAccount(false);
+                selectRoom(id);
+            } }, visitingRooms[id]);
+    })), React.createElement(Input_1.TextInput, { label: "Room Id", className: "Menu-VisitInput", value: visitInput, onChange: function onChange(value) {
+            return updateVisitInput(value);
+        } }), React.createElement(Input_1.Button, { label: "Join Room", onClick: function onClick() {
+            return user && selectVisitRoom(visitInput, user);
+        } }));
 };
 exports.default = Menu;
 
@@ -462,6 +475,7 @@ __webpack_require__(131);
 var Room = function Room(_ref) {
     var room = _ref.room,
         editRoom = _ref.editRoom,
+        canEdit = _ref.canEdit,
         boards = _ref.boards,
         user = _ref.user,
         canAddBoard = _ref.canAddBoard,
@@ -469,7 +483,7 @@ var Room = function Room(_ref) {
         updateRoom = _ref.updateRoom,
         deleteRoom = _ref.deleteRoom,
         updateEditRoom = _ref.updateEditRoom;
-    return React.createElement("div", { className: "Room" }, React.createElement("header", null, React.createElement("h2", null, room.name), React.createElement(Input_1.Button, { label: "Edit Room", onClick: function onClick() {
+    return React.createElement("div", { className: "Room" }, React.createElement("header", null, React.createElement("h2", null, room.name), canEdit && (!editRoom || editRoom.id !== room.id) && React.createElement(Input_1.Button, { label: "Edit Room", onClick: function onClick() {
             return updateEditRoom(Object.assign({}, room));
         } })), !editRoom || editRoom.id !== room.id ? React.createElement("div", { className: "Room-Boards" }, array_1.map(boards, function (board) {
         return React.createElement(Board_1.default, { key: board.id, board: board, room: room });
@@ -477,7 +491,7 @@ var Room = function Room(_ref) {
             return createBoard(user, room, { name: 'New Board' });
         } })) : React.createElement("div", { className: "Room-Editor" }, React.createElement(Input_1.TextInput, { label: "Room Name", value: editRoom.name, onChange: function onChange(name) {
             return updateEditRoom(Object.assign({}, editRoom, { name: name }));
-        } }), React.createElement("h3", null, "Favorites"), React.createElement(Input_1.CheckBox, { label: "Enabled", onChange: function onChange(favoritesEnabled) {
+        } }), React.createElement("i", null, "Room Id: ", React.createElement("span", null, room.id)), React.createElement("i", null, "Use this to share you room"), React.createElement("h3", null, "Favorites"), React.createElement(Input_1.CheckBox, { label: "Enabled", onChange: function onChange(favoritesEnabled) {
             return updateEditRoom(Object.assign({}, editRoom, { favoritesEnabled: favoritesEnabled }));
         }, checked: editRoom.favoritesEnabled }), React.createElement(Input_1.CheckBox, { label: "Admin only", onChange: function onChange(favoritesAdminOnly) {
             return updateEditRoom(Object.assign({}, editRoom, { favoritesAdminOnly: favoritesAdminOnly }));
@@ -494,7 +508,7 @@ var Room = function Room(_ref) {
         }, checked: editRoom.cardsAdminOnly }), React.createElement(Input_1.Button, { label: "Update Room", onClick: function onClick() {
             return user && updateRoom(editRoom, user);
         } }), React.createElement(Input_1.Button, { label: "Delete Room", onClick: function onClick() {
-            return deleteRoom(editRoom);
+            return user && deleteRoom(editRoom, user);
         } })));
 };
 exports.default = Room;
@@ -725,12 +739,15 @@ var mapStateToProps = function mapStateToProps(state) {
     return {
         user: user,
         rooms: !user ? {} : user.rooms,
+        visitingRooms: !user ? {} : user.visitingRooms || {},
+        visitInput: ui_1.$visitInput(state),
         visible: true
     };
 };
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         editAccount: ui_1.editAccount(dispatch),
+        updateVisitInput: ui_1.updateVisitInput(dispatch),
         selectRoom: function selectRoom(roomId) {
             return data_1.fetchCompleteRoom(dispatch)(roomId).then(function () {
                 return ui_1.selectRoom(dispatch)(roomId);
@@ -739,6 +756,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         createRoom: function createRoom(user) {
             return data_1.createRoom(dispatch)(user, { name: 'New Room' }).then(function (key) {
                 return ui_1.selectRoom(dispatch)(key);
+            });
+        },
+        selectVisitRoom: function selectVisitRoom(roomId, user) {
+            return data_1.selectVisitRoom(dispatch)(roomId, user).then(function () {
+                return ui_1.selectRoom(dispatch)(roomId);
             });
         }
     };
@@ -959,10 +981,11 @@ var deleteAccountError = function deleteAccountError(_ref8) {
     };
 };
 var updateAccountDataSuccess = function updateAccountDataSuccess(_ref9) {
-    var rooms = _ref9.rooms;
+    var rooms = _ref9.rooms,
+        visitingRooms = _ref9.visitingRooms;
     return {
         type: "UPDATE_ACCOUNT_DATA_SUCCESS" /* UPDATE_ACCOUNT_DATA_SUCCESS */
-        , rooms: rooms
+        , rooms: rooms, visitingRooms: visitingRooms
     };
 };
 var updateAccountDataError = function updateAccountDataError(_ref10) {
@@ -981,10 +1004,12 @@ exports.logIn = function (dispatch) {
             return api_1.fetchData("users/" + user.uid).then(function (userData) {
                 return dispatch(logInSuccess({ user: Object.assign(user, userData || { rooms: [] }) }));
             }).catch(function (error) {
-                return dispatch(logInError(error));
+                console.error(error);
+                dispatch(logInError(error));
             });
         }).catch(function (error) {
-            return dispatch(logInError(error));
+            console.error(error);
+            dispatch(logInError(error));
         });
     };
 };
@@ -993,7 +1018,8 @@ exports.logOut = function (dispatch) {
         return dispatch(authRequest), firebase.auth().signOut().then(function () {
             return dispatch(logOutSuccess({ user: null }));
         }).catch(function (error) {
-            return dispatch(logOutError(error));
+            console.error(error);
+            dispatch(logOutError(error));
         });
     };
 };
@@ -1006,7 +1032,8 @@ exports.createAccount = function (dispatch) {
                 return dispatch(createAccountSuccess({ user: Object.assign(user, userData || { rooms: [] }) }));
             });
         }).catch(function (error) {
-            return dispatch(createAccountError(error));
+            console.error(error);
+            dispatch(createAccountError(error));
         });
     };
 };
@@ -1024,7 +1051,8 @@ exports.updateAccount = function (dispatch) {
                     user: firebase.auth().currentUser
                 }));
             }).catch(function (error) {
-                return dispatch(updateAccountError(error));
+                console.error(error);
+                dispatch(updateAccountError(error));
             });
         } else {
             dispatch(updateAccountError({ message: 'Not Logged In' }));
@@ -1040,7 +1068,8 @@ exports.deleteAccount = function (dispatch) {
             return user.delete().then(function () {
                 return dispatch(deleteAccountSuccess({ user: null }));
             }).catch(function (error) {
-                return dispatch(deleteAccountError(error));
+                console.error(error);
+                dispatch(deleteAccountError(error));
             });
         } else {
             return Promise.resolve(dispatch(logOutError({ message: 'Must be logged in to delete an Account' })));
@@ -1053,7 +1082,8 @@ exports.fetchAccountData = function (dispatch) {
         return dispatch(authRequest), api_1.fetchData("users/" + uid).then(function (userData) {
             return dispatch(updateAccountDataSuccess(userData));
         }).catch(function (error) {
-            return dispatch(updateAccountDataError(error));
+            console.error(error);
+            dispatch(updateAccountDataError(error));
         });
     };
 };
@@ -1798,8 +1828,10 @@ exports.updateCard = function (dispatch) {
     };
 };
 exports.deleteRoom = function (dispatch) {
-    return function (room) {
+    return function (room, user) {
         return dispatch(dataRequest), api_1.removeData("rooms/" + room.id).then(function () {
+            return api_1.removeData("users/" + user.uid + "/rooms/" + room.id);
+        }).then(function () {
             return dispatch(deleteRoomSuccess({ id: room.id }));
         }).catch(function (error) {
             console.error(error);
@@ -1836,6 +1868,21 @@ exports.deleteCard = function (dispatch) {
         }).catch(function (error) {
             console.error(error);
             dispatch(deleteCardError(error));
+            return {};
+        });
+    };
+};
+exports.selectVisitRoom = function (dispatch) {
+    return function (roomId, user) {
+        return dispatch(dataRequest), api_1.fetchData("rooms/" + roomId).then(function (room) {
+            return api_1.setData("users/" + user.uid + "/visitingRooms/" + room.id, room.name);
+        }).then(function () {
+            return exports.fetchCompleteRoom(dispatch)(roomId);
+        }).then(function () {
+            return auth_1.fetchAccountData(dispatch)(user);
+        }).catch(function (error) {
+            console.error(error);
+            dispatch(updateRoomError(error));
             return {};
         });
     };
@@ -1995,6 +2042,13 @@ var editCardAC = function editCardAC(_ref5) {
         , card: card
     };
 };
+var updateVisitInputAC = function updateVisitInputAC(_ref6) {
+    var visitInput = _ref6.visitInput;
+    return {
+        type: "UPDATE_VISIT_INPUT" /* UPDATE_VISIT_INPUT */
+        , visitInput: visitInput
+    };
+};
 /* Requests */
 exports.editAccount = function (dispatch) {
     return function (show) {
@@ -2021,13 +2075,19 @@ exports.editCard = function (dispatch) {
         return Promise.resolve(dispatch(editCardAC({ card: card })));
     };
 };
+exports.updateVisitInput = function (dispatch) {
+    return function (visitInput) {
+        return Promise.resolve(dispatch(updateVisitInputAC({ visitInput: visitInput })));
+    };
+};
 exports.defaultState = function () {
     return {
         editAccount: false,
         selectedRoom: null,
         card: null,
         board: null,
-        room: null
+        room: null,
+        visitInput: ''
     };
 };
 /* Reducer */
@@ -2046,6 +2106,8 @@ exports.reducer = function () {
             return Object.assign({}, state, { card: Object.assign(Object.create(null), action.card) });
         case "SELECT_ROOM" /* SELECT_ROOM */:
             return Object.assign({}, state, { selectedRoom: action.id });
+        case "UPDATE_VISIT_INPUT" /* UPDATE_VISIT_INPUT */:
+            return Object.assign({}, state, { visitInput: action.visitInput });
     }
     return state;
 };
@@ -2064,6 +2126,9 @@ exports.$editBoard = function (state) {
 };
 exports.$editCard = function (state) {
     return object_1.get(state, 'ui.card', null);
+};
+exports.$visitInput = function (state) {
+    return object_1.get(state, 'ui.visitInput', '');
 };
 
 /***/ }),
