@@ -15,6 +15,7 @@ type RoomElement = {
   (props: {
     room: Room;
     editRoom: Room | null;
+    canEdit: boolean;
     boards: Board[];
     user: User | null,
     canAddBoard: boolean;
@@ -26,11 +27,11 @@ type RoomElement = {
 }
 
 const Room: RoomElement =
-  ({ room, editRoom, boards, user, canAddBoard, createBoard, updateRoom, deleteRoom, updateEditRoom }) => (
+  ({ room, editRoom, canEdit, boards, user, canAddBoard, createBoard, updateRoom, deleteRoom, updateEditRoom }) => (
     <div className="Room">
       <header>
         <h2>{room.name}</h2>
-        {(!editRoom || editRoom.id !== room.id) && <Button
+        {(canEdit && (!editRoom || editRoom.id !== room.id)) && <Button
           label="Edit Room"
           onClick={() => updateEditRoom(Object.assign({}, room))}
         />}
