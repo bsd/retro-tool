@@ -4,6 +4,7 @@ import { fetchData } from './api';
 /* State */
 export type UserData = {
   rooms: { [roomId: string]: string };
+  visitingRooms: { [roomId: string]: string };
 }
 
 export type User = {
@@ -139,10 +140,9 @@ const deleteAccountError: ActionCreator<DeleteAccountError> =
   });
 
 const updateAccountDataSuccess: ActionCreator<UpdateAccountDataSuccess> =
-  ({ rooms }) => ({
   ({ rooms, visitingRooms }) => ({
     type: Type.UPDATE_ACCOUNT_DATA_SUCCESS,
-    rooms,
+    rooms, visitingRooms
   });
 
 const updateAccountDataError: ActionCreator<UpdateAccountDataError> =

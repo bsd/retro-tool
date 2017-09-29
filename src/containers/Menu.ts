@@ -17,6 +17,7 @@ const mapStateToProps = (state: State) => {
   return {
     user,
     rooms: !user ? {} : user.rooms,
+    visitingRooms: !user ? {} : user.visitingRooms || {},
     visible: true,
   };
 };

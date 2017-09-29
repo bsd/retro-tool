@@ -10,13 +10,14 @@ type Menu = {
     visible: boolean;
     user: User | null;
     rooms: User["rooms"];
+    visitingRooms: User["visitingRooms"];
     editAccount: (show: boolean) => void;
     selectRoom: (roomId: string) => void;
     createRoom: (user: User) => void;
   }): JSX.Element;
 }
 
-const Menu: Menu = ({ user, rooms, visible, editAccount, selectRoom, createRoom }) => (
+const Menu: Menu = ({ user, rooms, visitingRooms, visible, editAccount, selectRoom, createRoom }) => (
   <menu className={`Menu ${visible ? '--visible' : '--hidden'}`}>
     {user && (
       <div className="Menu-User">
@@ -46,6 +47,19 @@ const Menu: Menu = ({ user, rooms, visible, editAccount, selectRoom, createRoom 
         label="Create Room"
         onClick={() => createRoom(user)}
       />
+    </ul>}
+    {(user && Object.keys(visitingRooms).length) && <ul className="Menu-RoomList">
+      <h3>Visting rooms</h3>
+      {map(
+        Object.keys(visitingRooms),
+        (id: string) => <li
+          key={id}
+          onClick={() => {
+            editAccount(false);
+            selectRoom(id);
+          }}
+        >{visitingRooms[id]}</li>
+      )}
     </ul>}
   </menu>
 );
