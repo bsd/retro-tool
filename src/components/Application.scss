@@ -1,0 +1,48 @@
+@import './_config';
+
+.Application {
+  display: flex;
+
+  min-height: 100%;
+
+  align-items: center;
+  justify-content: center;
+}
+
+*, *:after, *:before {
+  font-family: 'gesta',sans-serif;
+  line-height: 24px;
+
+  box-sizing: border-box;
+
+  cursor: default;
+  user-select: none;
+  transition: 0.25s ease transform, 0.25s ease opacity, 0.35s ease color, 0.35s ease background;
+  letter-spacing: 0.1em;
+
+  color: $blue;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+*:first-child {
+  margin-top: 0;
+}
+
+*:last-child {
+  margin-bottom: 0;
+}
+
+p:empty, span:empty, ul:empty {
+  display: none;
+}
+
+p, span, li {
+  white-space: pre-wrap;
+}
+
+
+ul, ol {
+  margin: 12px 0;
+  padding: 0;
+}

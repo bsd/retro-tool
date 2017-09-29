@@ -1,0 +1,49 @@
+@import './_config';
+
+.Board {
+  width: 240px;
+  height: 400px;
+  margin: 0 12px;
+
+  border: 1px solid $blue;
+}
+
+.Board-Header {
+  position: relative;
+
+  width: 100%;
+  height: 36px;
+  padding: 6px;
+
+  text-align: left;
+
+  background-color: $blue;
+  h3 {
+    margin: 0;
+
+    color: white;
+  }
+  button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+
+    border: 1px solid white;
+  }
+}
+
+.Board-Editor {
+  .fieldSet, select, button {
+    width: calc(100% - 24px);
+    margin: 6px 12px;
+  }
+}
+
+.Board-Cards {
+  padding-top: 12px;
+  &>button {
+    width: calc(100% - 24px);
+    height: 48px;
+    margin: 12px;
+  }
+}

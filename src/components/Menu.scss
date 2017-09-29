@@ -1,0 +1,69 @@
+@import './_config';
+
+.Menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 240px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  transform: translate3d(calc(50vw - 120px),0,0);
+  text-align: center;
+
+  background-color: $blue;
+  button {
+    border-color: white;
+  }
+  h1, h2, h3 {
+    margin: 12px auto;
+
+    color: white;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  .Application.--side-menu & {
+    width: 180px;
+
+    transform: translate3d(0,0,0);
+  }
+}
+
+.Menu-User {
+  margin-top: 150px;
+  .Menu-User-pic {
+    overflow: hidden;
+
+    width: 100%;
+    height: 96px;
+    margin-top: 24px;
+    padding: 0 12px;
+
+    img {
+      height: 100%;
+
+      border: 1px solid white;
+      border-radius: 2px;
+    }
+  }
+}
+
+.Menu-RoomList {
+  li {
+    font-size: 12px;
+
+    margin: 6px 0;
+
+    list-style: none;
+
+    cursor: pointer;
+
+    color: white;
+  }
+}

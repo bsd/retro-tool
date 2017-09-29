@@ -1,0 +1,35 @@
+@import './_config';
+
+.LogIn {
+  position: absolute;
+  top: calc(50vh - 80px );
+  left: calc(50vw - #{$columnWidth - 24}/2);
+
+  display: flex;
+
+  width: $columnWidth - 24;
+  padding: 24px;
+
+  border: 1px solid $blue;
+  border-radius: 2px;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .fieldset.password, .fieldset.text {
+    width: 100%;
+  }
+  .fieldset, button, i {
+    &:not(:first-child) {
+      margin-top: 12px;
+    }
+  }
+  button {
+    width: 100%;
+  }
+  i {
+    font-size: 12px;
+    line-height: 24px;
+
+    color: $red;
+  }
+}

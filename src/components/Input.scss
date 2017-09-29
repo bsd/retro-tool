@@ -1,0 +1,176 @@
+@import '_config';
+
+.fieldset {
+  font-size: 12px;
+
+  margin: 0;
+  padding: 0;
+
+  color: $blue;
+  border: none;
+}
+
+.fieldset.search, .fieldset.password, .fieldset.text, .fieldset.number, .fieldset.dropdown {
+  font-size: 12px;
+
+  position: relative;
+
+  display: flex;
+  overflow: visible;
+
+  height: 24px;
+  padding: 0;
+
+  border-radius: 2px;
+  label {
+    font-size: 12px;
+    line-height: 24px;
+
+    margin-right: 3px;
+
+    color: $blue;
+  }
+  select, input {
+    position: relative;
+    z-index: 1;
+
+    margin: 0;
+    padding-left: 4px;
+
+    border: 1px solid $blue;
+    outline: none;
+
+    -webkit-appearance: none;
+    flex: 1;
+    &[type='number'] {
+      text-align: right;
+    }
+  }
+  select {
+    padding-right: 12px;
+
+    background-color: transparent;
+    background-image: url('data:image/svg+xml;utf8,<svg version=\'1.1\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'><path fill=\'#444\' d=\'M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z\'></path></svg>');
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+    background-size: 12px 12px;
+  }
+}
+
+.fieldset.textarea {
+  padding: 12px 24px;
+
+  border-radius: 2px;
+  label {
+    font-size: 18px;
+    line-height: 24px;
+
+    display: block;
+
+    color: $blue;
+  }
+  textarea {
+    line-height: 24px;
+
+    display: block;
+
+    width: 100%;
+    height: 72px;
+
+    resize: vertical;
+
+    color: $blue;
+    border: 1px solid $blue;
+    border: none;
+    outline: none;
+  }
+}
+
+.fieldset.file label, button {
+  font-size: 12px;
+
+  position: relative;
+
+  height: 24px;
+  padding: 0 12px;
+
+  cursor: pointer;
+  transition: all 0.125s ease;
+  transform: scale(1);
+
+  border: none;
+  border: 1px solid $blue;
+  outline: none;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  &:hover, &:active {
+    color: white;
+    background-color: $blue;
+  }
+
+  &:active {
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    cursor: default;
+
+    opacity: 0.5;
+  }
+}
+
+.fieldset.checkbox {
+  position: relative;
+
+  display: inline-block;
+
+  height: 24px;
+
+  label {
+    line-height: 24px;
+
+    padding-right: 24px;
+
+    cursor: pointer;
+  }
+  input {
+    position: absolute;
+    top: 3px;
+    right: 0;
+
+    width: 12px;
+    height: 12px;
+
+    cursor: pointer;
+
+    border: 1px solid $blue;
+    outline: none;
+
+    -webkit-appearance: none;
+    &:before {
+      position: absolute;
+
+      width: 16px;
+      height: 6px;
+
+      content: ' ';
+      transform: translate3d(0, -2px, 0) rotate(-46deg);
+
+      opacity: 0;
+      border-bottom: 2px solid $blue;
+      border-left: 2px solid $blue;
+    }
+
+    &:checked:before {
+      opacity: 1;
+    }
+  }
+}
+
+.fieldset.file {
+  input {
+    display: none;
+  }
+}

@@ -1,0 +1,54 @@
+@import './_config';
+
+.AccountManager {
+  display: flex;
+
+  width: 288px;
+  padding: 12px;
+
+  transform: translate3d(90px, 0, 0);
+
+  border: 1px solid $blue;
+  border-radius: 2px;
+  background-color: white;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .fieldset.password, .fieldset.text {
+    width: 100%;
+    margin-top: 12px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  button {
+    width: 100%;
+    margin-top: 18px;
+    &.--delete {
+      cursor: crosshair;
+
+      color: $red;
+    }
+  }
+  &.error {
+    button {
+      margin-top: 6px;
+    }
+  }
+  i {
+    font-size: 12px;
+
+    margin-top: 12px;
+
+    color: $red;
+  }
+  .AccountManager-pic {
+    display: inline-block;
+
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+
+    border-radius: 100px;
+  }
+}
