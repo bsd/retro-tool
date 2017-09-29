@@ -2,8 +2,10 @@ import { connect } from 'react-redux'
 import Menu from '../components/Menu';
 import { State } from '../state';
 import {
+  updateVisitInput,
   editAccount,
   selectRoom,
+  $visitInput,
 } from '../state/ui';
 import { User, $user } from '../state/auth';
 import {
@@ -18,12 +20,14 @@ const mapStateToProps = (state: State) => {
     user,
     rooms: !user ? {} : user.rooms,
     visitingRooms: !user ? {} : user.visitingRooms || {},
+    visitInput: $visitInput(state),
     visible: true,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editAccount: editAccount(dispatch),
+  updateVisitInput: updateVisitInput(dispatch),
   selectRoom: (roomId: string) =>
     fetchCompleteRoom(dispatch)(roomId)
       .then(() => selectRoom(dispatch)(roomId)),

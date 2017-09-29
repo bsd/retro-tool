@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { map } from 'pura/array';
 import { User } from '../state/auth';
-import { Button } from './Input';
+import { Button, TextInput } from './Input';
 
 import './Menu.scss';
 
@@ -10,14 +10,16 @@ type Menu = {
     visible: boolean;
     user: User | null;
     rooms: User["rooms"];
+    visitInput: string;
     visitingRooms: User["visitingRooms"];
     editAccount: (show: boolean) => void;
     selectRoom: (roomId: string) => void;
     createRoom: (user: User) => void;
+    updateVisitInput: (visitInput: string) => void;
   }): JSX.Element;
 }
 
-const Menu: Menu = ({ user, rooms, visitingRooms, visible, editAccount, selectRoom, createRoom }) => (
+const Menu: Menu = ({ user, rooms, visitInput, visitingRooms, visible, editAccount, selectRoom, createRoom, updateVisitInput }) => (
   <menu className={`Menu ${visible ? '--visible' : '--hidden'}`}>
     {user && (
       <div className="Menu-User">
@@ -61,6 +63,15 @@ const Menu: Menu = ({ user, rooms, visitingRooms, visible, editAccount, selectRo
         >{visitingRooms[id]}</li>
       )}
     </ul>}
+    <TextInput
+      label="Room Id"
+      className="Menu-VisitInput"
+      value={visitInput}
+      onChange={value => updateVisitInput(value)}
+    />
+    <Button
+      label="Join Room"
+    />
   </menu>
 );
 

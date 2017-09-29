@@ -67,3 +67,16 @@
     color: white;
   }
 }
+
+.Menu-VisitInput.fieldset.text {
+  width: 80%;
+  margin: 12px auto;
+  label {
+    color: white;
+  }
+  input {
+    color: white;
+    border: 1px solid white;
+    background-color: $blue;
+  }
+}

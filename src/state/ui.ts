@@ -7,6 +7,7 @@ export type UI = {
   card: Card | null;
   board: Board | null;
   room: Room | null;
+  visitInput: string;
 }
 
 /* Action Types */
@@ -16,6 +17,7 @@ const enum Type {
   EDIT_ROOM = 'EDIT_ROOM',
   EDIT_BOARD = 'EDIT_BOARD',
   EDIT_CARD = 'EDIT_CARD',
+  UPDATE_VISIT_INPUT = 'UPDATE_VISIT_INPUT',
 }
 
 /* Actions */
@@ -24,6 +26,7 @@ type SelectRoom = Action<Type.SELECT_ROOM, { id: string }>;
 type EditRoom = Action<Type.EDIT_ROOM, { room: Room | null }>;
 type EditBoard = Action<Type.EDIT_BOARD, { board: Board | null }>;
 type EditCard = Action<Type.EDIT_CARD, { card: Card | null }>;
+type UpdateVisitInput = Action<Type.UPDATE_VISIT_INPUT, { visitInput: string }>;
 
 /* Action Creator */
 const editAccountAC: ActionCreator<EditAccount> =
@@ -50,6 +53,11 @@ const editCardAC: ActionCreator<EditCard> =
   ({ card }) => ({
     type: Type.EDIT_CARD,
     card,
+  });
+const updateVisitInputAC: ActionCreator<UpdateVisitInput> =
+  ({ visitInput }) => ({
+    type: Type.UPDATE_VISIT_INPUT,
+    visitInput,
   });
 
 /* Requests */
@@ -78,12 +86,18 @@ export const editCard =
     (card: Card | null) =>
       Promise.resolve(dispatch(editCardAC({ card })));
 
+export const updateVisitInput =
+  (dispatch: Dispatch) =>
+    (visitInput: string) =>
+      Promise.resolve(dispatch(updateVisitInputAC({ visitInput })));
+
 type UIActions =
   EditAccount |
   SelectRoom |
   EditRoom |
   EditBoard |
-  EditCard;
+  EditCard |
+  UpdateVisitInput;
 
 export const defaultState =
   (): UI => ({
@@ -92,6 +106,7 @@ export const defaultState =
     card: null,
     board: null,
     room: null,
+    visitInput: '',
   });
 
 /* Reducer */
@@ -123,6 +138,11 @@ export const reducer =
         state,
         { selectedRoom: action.id },
       );
+      case Type.UPDATE_VISIT_INPUT: return Object.assign(
+        {},
+        state,
+        { visitInput: action.visitInput },
+      );
     }
     return state;
   };
@@ -135,6 +155,7 @@ export const $editAccount =
       'ui.editAccount',
       false,
     );
+
 export const $selectRoom =
   (state: { ui: UI }) =>
     get<string | null>(
@@ -142,6 +163,7 @@ export const $selectRoom =
       'ui.selectedRoom',
       null,
     );
+
 export const $editRoom =
   (state: { ui: UI }) =>
     get<Room | null>(
@@ -149,6 +171,7 @@ export const $editRoom =
       'ui.room',
       null,
     );
+
 export const $editBoard =
   (state: { ui: UI }) =>
     get<Board | null>(
@@ -156,10 +179,19 @@ export const $editBoard =
       'ui.board',
       null,
     );
+
 export const $editCard =
   (state: { ui: UI }) =>
     get<Card | null>(
       state,
       'ui.card',
       null,
+    );
+
+export const $visitInput =
+  (state: { ui: UI }) =>
+    get<string>(
+      state,
+      'ui.visitInput',
+      '',
     );
